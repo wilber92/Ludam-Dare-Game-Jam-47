@@ -30,15 +30,6 @@ public class Tile : MonoBehaviour {
         col.enabled = true;
 	}
 
-	private void Update() {
-        if (!Application.isPlaying) {
-            if (transform.hasChanged) {
-                transform.position = FindObjectOfType<Grid>().WorldToCell(transform.position);
-            }
-            return;
-		}
-    }
-
 	public void Rotate(float angle) {
         StartCoroutine(rotate(angle));
 	}

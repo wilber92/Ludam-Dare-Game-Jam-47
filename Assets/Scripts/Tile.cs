@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -8,23 +9,24 @@ public class Tile : MonoBehaviour {
     public Color normalColour;
     public Color higlightColour;
     public TileType type;
-    public AudioClip clip;
+    public List<AudioClip> clips = new List<AudioClip>();
     public GameObject physicsObject;
     public GameObject visualObject;
     public float rotationTime;
 
-    private bool placed;
     private Collider2D col;
-    private SpriteRenderer spriteRenderer;
-
+    private SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer spriteRenderer => _spriteRenderer == null ? _spriteRenderer = GetComponentInChildren<SpriteRenderer>() : _spriteRenderer;
     private float rotation;
 
 	private void Awake() {
         col = GetComponentInChildren<Collider2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+	}
+	private void OnValidate() {
+        setNormalColour();
 	}
 
-    public void Init() {
+	public void Init() {
         col.enabled = true;
 	}
 
@@ -41,21 +43,20 @@ public class Tile : MonoBehaviour {
         StartCoroutine(rotate(angle));
 	}
 
-	public void Hit() {
+	public virtual void Hit() {
         playSound();
-        Rotate(90);
 	}
     private void playSound() {
-        if (clip != null) {
-            AudioManager.instance.audioSource.PlayOneShot(clip);
+        if (clips.Count != 0) {
+            AudioManager.instance.audioSource.PlayOneShot(clips.GetRandomFromList());
         }
-    }
+    }    
+
 	IEnumerator rotate(float angle) {
         var previousRotation = rotation;
         rotation += angle;
         physicsObject.transform.eulerAngles = new Vector3(0, 0, rotation);
 
-        var startRotation = visualObject.transform.eulerAngles.z;
         float t = 0;
         float elapsedTime = 0;
         while (t <= 1) {
@@ -68,30 +69,10 @@ public class Tile : MonoBehaviour {
 		}
         visualObject.transform.eulerAngles = new Vector3(0, 0, rotation);
     }
-
-	private void OnMouseEnter() {
-        setHighlightColour();
-	}
-	private void OnMouseExit() {
-        setNormalColour();
-	}
-    private void setHighlightColour() {
+    protected void setHighlightColour() {
         spriteRenderer.color = higlightColour;
     }
-    private void setNormalColour() {
+    protected void setNormalColour() {
         spriteRenderer.color = normalColour;
-    }
-	private void OnMouseOver() {
-        if (Input.GetMouseButtonDown(0)) {
-            if (Input.GetKey(KeyCode.LeftControl)) {
-                Destroy(gameObject);
-            }
-			else {
-                StartCoroutine(rotate(-90));
-            }
-        }
-        if (Input.GetMouseButtonDown(1)) {
-            StartCoroutine(rotate(90));
-        }
     }
 }

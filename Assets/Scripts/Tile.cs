@@ -1,51 +1,97 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
+[ExecuteInEditMode]
 public class Tile : MonoBehaviour {
+
+    public Color normalColour;
+    public Color higlightColour;
     public TileType type;
     public AudioClip clip;
+    public GameObject physicsObject;
+    public GameObject visualObject;
+    public float rotationTime;
 
     private bool placed;
     private Collider2D col;
+    private SpriteRenderer spriteRenderer;
+
+    private float rotation;
 
 	private void Awake() {
-        col = GetComponent<Collider2D>();
+        col = GetComponentInChildren<Collider2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
-	public void Init() {
-        placed = false;
-        col.enabled = false;
-
-    }
+    public void Init() {
+        col.enabled = true;
+	}
 
 	private void Update() {
-        if (!placed) {
-            updatePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            if (Input.GetMouseButtonDown(0)) {
-                placeTile();
+        if (!Application.isPlaying) {
+            if (transform.hasChanged) {
+                transform.position = FindObjectOfType<Grid>().WorldToCell(transform.position);
             }
-            if (Input.GetKeyDown(KeyCode.E)) {
-                rotate(90);
-            }
-            if (Input.GetKeyDown(KeyCode.Q)) {
-                rotate(-90);
-            }
-        }
+            return;
+		}
+    }
+
+	public void Rotate(float angle) {
+        StartCoroutine(rotate(angle));
 	}
-	private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log($"Hit tile {name}");
+
+	public void Hit() {
+        playSound();
+        Rotate(90);
+	}
+    private void playSound() {
         if (clip != null) {
             AudioManager.instance.audioSource.PlayOneShot(clip);
         }
     }
-	private void rotate(float angle) {
-        transform.Rotate(new Vector3(0, 0, angle));
-	}
-    private void updatePosition(Vector2 position) {
-        transform.position = TileCreator.instance.grid.WorldToCell(position); ;
-	}
+	IEnumerator rotate(float angle) {
+        var previousRotation = rotation;
+        rotation += angle;
+        physicsObject.transform.eulerAngles = new Vector3(0, 0, rotation);
 
-	private void placeTile() {
-        placed = true;
-        col.enabled = true;
+        var startRotation = visualObject.transform.eulerAngles.z;
+        float t = 0;
+        float elapsedTime = 0;
+        while (t <= 1) {
+            elapsedTime += Time.deltaTime;
+            t = elapsedTime / rotationTime;
+            var targetRotation = Mathf.Lerp(previousRotation, rotation, t);
+
+            visualObject.transform.eulerAngles = new Vector3(0, 0, targetRotation);
+            yield return null;
+		}
+        visualObject.transform.eulerAngles = new Vector3(0, 0, rotation);
+    }
+
+	private void OnMouseEnter() {
+        setHighlightColour();
 	}
+	private void OnMouseExit() {
+        setNormalColour();
+	}
+    private void setHighlightColour() {
+        spriteRenderer.color = higlightColour;
+    }
+    private void setNormalColour() {
+        spriteRenderer.color = normalColour;
+    }
+	private void OnMouseOver() {
+        if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetKey(KeyCode.LeftControl)) {
+                Destroy(gameObject);
+            }
+			else {
+                StartCoroutine(rotate(-90));
+            }
+        }
+        if (Input.GetMouseButtonDown(1)) {
+            StartCoroutine(rotate(90));
+        }
+    }
 }

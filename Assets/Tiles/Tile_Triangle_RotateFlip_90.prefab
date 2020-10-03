@@ -49,7 +49,16 @@ MonoBehaviour:
   normalColour: {r: 0.69803923, g: 0.5462886, b: 0.25882354, a: 1}
   higlightColour: {r: 0, g: 0, b: 0, a: 0}
   type: 0
-  clip: {fileID: 0}
+  clips:
+  - {fileID: 8300000, guid: ee0bf0604f824b6488aaf8f61271397c, type: 3}
+  - {fileID: 8300000, guid: b2e3631a771471c43b10dce6c0abc4a8, type: 3}
+  - {fileID: 8300000, guid: 2e425270968c07d4ca62528bd491ef35, type: 3}
+  - {fileID: 8300000, guid: ce44ea2a21976444e91aefca367db932, type: 3}
+  - {fileID: 8300000, guid: 4850cb7a8d04abf4499bd95590b77c1f, type: 3}
+  - {fileID: 8300000, guid: 3985d021fa28465448f9e4af46a5474a, type: 3}
+  - {fileID: 8300000, guid: 260d2bcacccbdcd47ac1f628a94139c8, type: 3}
+  - {fileID: 8300000, guid: 593d492875d4cab4790281ab979273c9, type: 3}
+  - {fileID: 8300000, guid: 121cc0d39556c3746ac4a72469945090, type: 3}
   physicsObject: {fileID: 1289451010751876643}
   visualObject: {fileID: 479329064761438180}
   rotationTime: 0.2

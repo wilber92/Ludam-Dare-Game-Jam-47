@@ -32,6 +32,7 @@ public class Tile : MonoBehaviour {
         }
 	}
 	private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log($"Hit tile {name}");
         if (clip != null) {
             AudioManager.instance.audioSource.PlayOneShot(clip);
         }

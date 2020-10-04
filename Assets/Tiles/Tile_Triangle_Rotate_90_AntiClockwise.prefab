@@ -61,7 +61,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5f80de523b4948a4dbc9e4665994823c, type: 3}
   physicsObject: {fileID: 1289451010751876643}
   visualObject: {fileID: 479329064761438180}
-  rotationTime: 0.2
+  rotateSpeed: 1000
+  colourSpeed: 2.5
+  colourReductionOnHit: 2
   clockwise: 0
   rotateAmount: 90
 --- !u!50 &4187039744837726107
@@ -176,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6276639066393081252}
   - component: {fileID: 8505192354016303318}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: physics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

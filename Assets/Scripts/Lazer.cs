@@ -8,35 +8,42 @@ public class Lazer : MonoBehaviour {
 	public float maxDistance;
 	public float endPointThreshold;
 
-	public void Shoot(Vector2 direction, Vector2 origin) {
-		transform.position = origin;
-		var hit = Physics2D.Raycast(origin, direction, maxDistance);
-		if (hit) {
-			StartCoroutine(traverseTheLine(direction, hit.point, hit));
-		}
-		else {
-			var endPoint = (Vector2)transform.position + direction * maxDistance;
-			StartCoroutine(traverseTheLine(direction, endPoint, default));
-		}
+	private Vector2 currentPosition;
+	private Vector2 targetPosition;
+	private Vector2 direction;
+
+	private int layerMask;
+
+	private void Awake() {
+		currentPosition = transform.position;
+		layerMask = LayerMask.GetMask("block");
+	}
+	public void Init(Vector2 position, Vector2 direction) {
+		currentPosition = position;
+		this.direction = direction;
 	}
 
-	private IEnumerator traverseTheLine(Vector2 direction, Vector2 endPoint, RaycastHit2D hit) {
-		while(Vector2.Distance(transform.position, endPoint) > endPointThreshold) {
-			transform.position = Vector2.MoveTowards(transform.position, endPoint, speed);
-			yield return null;
-		}
-		if (hit) {
-			var tile = hit.collider.GetComponentInParent<Tile>();
-			if (tile != null) {
-				tile.Hit();
-			}
+	private void Update() {
+		//Ray cast in the direction you are going 
+		var hit = Physics2D.Raycast(currentPosition, direction, maxDistance, layerMask);
 
-			var newDirection = Vector2.Reflect(direction, hit.normal);
-			var newOrigin = endPoint + newDirection * 0.1f;
-			Shoot(newDirection, newOrigin);
+		//If the ray cast is under a certain distance away .. hit
+		if (hit) {
+			if (hit.distance < endPointThreshold) {
+				//if the collider is a tile
+				var tile = hit.collider.GetComponentInParent<Tile>();
+				if (tile != null) {
+					tile.Hit();
+				}
+
+				//reflect the direction
+				direction = Vector2.Reflect(direction, hit.normal);
+				currentPosition = hit.point;
+			}
 		}
-		else {
-			Destroy(gameObject);
-		}
+
+		targetPosition = currentPosition + (direction * maxDistance);
+		currentPosition = Vector2.MoveTowards(currentPosition, targetPosition, speed);
+		transform.position = currentPosition;
 	}
 }

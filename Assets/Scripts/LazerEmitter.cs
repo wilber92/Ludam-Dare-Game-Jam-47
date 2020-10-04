@@ -21,7 +21,7 @@ public class LazerEmitter : MonoBehaviour {
 	}
 
 	private void shoot() {
-		var lazerLight = Instantiate(lazerPrefab);
-		lazerLight.Shoot(transform.up, transform.position);
+		var lazerLight = Instantiate(lazerPrefab, transform.position, Quaternion.identity);
+		lazerLight.Init(transform.position, transform.up);
 	}
 }

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7650941577880946649}
-  - component: {fileID: -7571448809843452516}
+  - component: {fileID: -8322474332746447111}
   - component: {fileID: 4187039744837726107}
   m_Layer: 0
-  m_Name: Tile_Triangle_RotateFlip_90
+  m_Name: Tile_Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7571448809843452516
+--- !u!114 &-8322474332746447111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,29 +43,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 33095985484692874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69956c415fe26df43a4841a452c9959c, type: 3}
+  m_Script: {fileID: 11500000, guid: f0ef85cdbce8fab47bd5f866409fa88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalColour: {r: 0.69803923, g: 0.5462886, b: 0.25882354, a: 1}
-  higlightColour: {r: 0, g: 0, b: 0, a: 0}
+  normalColour: {r: 1, g: 1, b: 1, a: 1}
+  higlightColour: {r: 0.56700003, g: 0.13619117, b: 0.41691193, a: 1}
   type: 0
   clips:
-  - {fileID: 8300000, guid: ee0bf0604f824b6488aaf8f61271397c, type: 3}
-  - {fileID: 8300000, guid: b2e3631a771471c43b10dce6c0abc4a8, type: 3}
-  - {fileID: 8300000, guid: 2e425270968c07d4ca62528bd491ef35, type: 3}
-  - {fileID: 8300000, guid: ce44ea2a21976444e91aefca367db932, type: 3}
-  - {fileID: 8300000, guid: 4850cb7a8d04abf4499bd95590b77c1f, type: 3}
-  - {fileID: 8300000, guid: 3985d021fa28465448f9e4af46a5474a, type: 3}
-  - {fileID: 8300000, guid: 260d2bcacccbdcd47ac1f628a94139c8, type: 3}
-  - {fileID: 8300000, guid: 593d492875d4cab4790281ab979273c9, type: 3}
-  - {fileID: 8300000, guid: 121cc0d39556c3746ac4a72469945090, type: 3}
+  - {fileID: 8300000, guid: 1e543f20236952142bf3c1403aaa19a6, type: 3}
+  - {fileID: 8300000, guid: 597814805a528e14f8c4f1ce8cfcf216, type: 3}
+  - {fileID: 8300000, guid: 34e83f5172f74f440bc3079b1349705d, type: 3}
+  - {fileID: 8300000, guid: c208e6939fe03f34c866df4fe60f6f61, type: 3}
+  - {fileID: 8300000, guid: 0dc3b2229d3826747baa2d591a010cfd, type: 3}
+  - {fileID: 8300000, guid: 38be93f1659652b4c9e9d8efb9ba1d70, type: 3}
+  - {fileID: 8300000, guid: 29fdf98780909cb458d94c840e36485e, type: 3}
+  - {fileID: 8300000, guid: 30a7c15745099d94fbdff81fc5c1ae68, type: 3}
+  - {fileID: 8300000, guid: f54a406cfca21784c896601dcec73e3f, type: 3}
   physicsObject: {fileID: 1289451010751876643}
   visualObject: {fileID: 479329064761438180}
-  rotateSpeed: 1000
+  rotateSpeed: 0
   colourSpeed: 2.5
   colourReductionOnHit: 2
   rotateAmount: 90
-  rotationDirection: 1
 --- !u!50 &4187039744837726107
 Rigidbody2D:
   serializedVersion: 4
@@ -157,8 +156,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 796e85803f4f55846b754e60312092b8, type: 3}
-  m_Color: {r: 0.69803923, g: 0.5462886, b: 0.25882354, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b41ec04282b4846489573fc1e1bc83f2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -177,7 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6276639066393081252}
-  - component: {fileID: 8505192354016303318}
+  - component: {fileID: 3470152022323252414}
   m_Layer: 9
   m_Name: physics
   m_TagString: Untagged
@@ -199,8 +198,8 @@ Transform:
   m_Father: {fileID: 7650941577880946649}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &8505192354016303318
-PolygonCollider2D:
+--- !u!61 &3470152022323252414
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -208,22 +207,20 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1289451010751876643}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2ed1337b0d9801e439281da23bc8bfee, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.5, y: 0.5}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
